@@ -17,15 +17,13 @@ func ConnectDatabase() {
 		log.Fatal("Error loading .env file")
 	}
 
-	username := os.Getenv("DB_USERNAME") // somehow this is null
+	username := os.Getenv("DB_USERNAME")
 	password := os.Getenv("DB_PASSWORD")
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	name := os.Getenv("DB_NAME")
 
 	dsn := username + ":" + password + "@tcp(" + host + ":" + port + ")/" + name + "?charset=utf8mb4&parseTime=True&loc=Local"
-
-	print(dsn)
 
 	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -36,8 +34,4 @@ func ConnectDatabase() {
 	// database.Model(&Action{}).AddForeignKey("user_id", "users(id)", "CASCADE", "CASCADE")
 
 	DB = database
-}
-
-func defineRelation() {
-	// DB.Model(&Action{}).AddForeignKey()
 }
