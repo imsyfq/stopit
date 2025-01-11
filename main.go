@@ -13,6 +13,7 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/action", controllers.AllAction)
+	r.GET("login", controllers.Login)
 
 	r.Run(":8000")
 }

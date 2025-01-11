@@ -7,5 +7,5 @@ type Action struct {
 	CurrentStreak uint   `json:"current_streak" gorm:"default:0;not null"`
 	CreatedAt     string `json:"created_at"`
 	UpdatedAt     string `json:"updated_at"`
-	User          User   `gorm:"foreignKey:UserId"`
+	// User          User   `gorm:"foreignKey:UserId"`
 }
