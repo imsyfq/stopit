@@ -18,6 +18,7 @@ func main() {
 	auth.Use(middleware.JWTMiddleware())
 	{
 		auth.GET("/action", controllers.AllAction)
+		auth.POST("/action", controllers.CreateAction)
 	}
 
 	r.GET("/", func(ctx *gin.Context) {

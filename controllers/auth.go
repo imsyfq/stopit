@@ -81,14 +81,8 @@ func Login(c *gin.Context) {
 
 	token, err := createToken(user.Username, user.Id)
 	if err != nil {
-		c.JSON(500, map[string]any{
-			"success": false,
-			"message": err,
-		})
+		c.JSON(500, map[string]any{"success": false, "message": err})
 	}
 
-	c.JSON(200, gin.H{
-		"success": true,
-		"token":   token,
-	})
+	c.JSON(200, gin.H{"success": true, "token": token})
 }
