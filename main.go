@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"stopit/config"
 	"stopit/controllers"
 	"stopit/middleware"
 	"stopit/models"
@@ -10,6 +11,7 @@ import (
 )
 
 func main() {
+	config.InitEnv()
 	models.ConnectDatabase()
 
 	r := gin.Default()

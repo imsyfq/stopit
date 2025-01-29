@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"fmt"
+	"stopit/config"
 	"stopit/models"
 	"time"
 
@@ -12,20 +13,12 @@ import (
 	"gorm.io/gorm"
 )
 
-type Credential struct {
-	Username string `form:"username"`
-	Password string `form:"password"`
-}
-
 type MyClaims struct {
 	jwt.StandardClaims
 	UserId   int    `json:"user_id"`
 	Username string `json:"username"`
 	Exp      int64  `json:"exp"`
 }
-
-// var secretKey = []byte(os.Getenv("JWT_SECRET")) // find a way to do this soon
-var secretKey = []byte("DontBeADummiesYouGuys!")
 
 func createToken(username string, user_id int) (string, error) {
 	claims := MyClaims{
@@ -36,6 +29,7 @@ func createToken(username string, user_id int) (string, error) {
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
+	var secretKey = []byte(config.Env("JWT_SECRET"))
 	tokenString, err := token.SignedString([]byte(secretKey))
 	if err != nil {
 		return "", err
@@ -53,7 +47,7 @@ func Register(c *gin.Context) {
 }
 
 func Login(c *gin.Context) {
-	var cc Credential
+	var cc models.Credential
 	var user models.User
 
 	if err := c.ShouldBind(&cc); err != nil {

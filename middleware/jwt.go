@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"stopit/config"
 	"stopit/models"
 	"strings"
 	"time"
@@ -12,9 +13,6 @@ import (
 	"github.com/golang-jwt/jwt"
 	"gorm.io/gorm"
 )
-
-// var secretKey = []byte(os.Getenv("JWT_SECRET")) // find a way to do this soon
-var secretKey = []byte("DontBeADummiesYouGuys!")
 
 var User models.User
 
@@ -27,6 +25,8 @@ type MyClaims struct {
 
 func validateToken(tokenString string) (*MyClaims, error) {
 	var claims MyClaims
+	var secretKey = []byte(config.Env("JWT_SECRET"))
+
 	token, err := jwt.ParseWithClaims(tokenString, &claims, func(t *jwt.Token) (interface{}, error) {
 		return secretKey, nil
 	})

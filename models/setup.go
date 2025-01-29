@@ -1,10 +1,8 @@
 package models
 
 import (
-	"log"
-	"os"
+	"stopit/config"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -12,16 +10,11 @@ import (
 var DB *gorm.DB
 
 func ConnectDatabase() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	username := os.Getenv("DB_USERNAME")
-	password := os.Getenv("DB_PASSWORD")
-	host := os.Getenv("DB_HOST")
-	port := os.Getenv("DB_PORT")
-	name := os.Getenv("DB_NAME")
+	username := config.Env("DB_USERNAME")
+	password := config.Env("DB_PASSWORD")
+	host := config.Env("DB_HOST")
+	port := config.Env("DB_PORT")
+	name := config.Env("DB_NAME")
 
 	dsn := username + ":" + password + "@tcp(" + host + ":" + port + ")/" + name + "?charset=utf8mb4&parseTime=True&loc=Local"
 
