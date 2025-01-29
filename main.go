@@ -28,5 +28,9 @@ func main() {
 	})
 	r.POST("/login", controllers.Login)
 
-	r.Run(":8000")
+	port := config.Env("RUNNING_PORT")
+	if port == "" {
+		panic("No port was set in .env file")
+	}
+	r.Run(":" + port)
 }
